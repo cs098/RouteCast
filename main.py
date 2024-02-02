@@ -8,7 +8,7 @@ askhours = input(
 # Make a GET request to the URL
 response = requests.get(
     'https://api.weatherapi.com/v1/forecast.json?key=d64b86a0b5be44fd9d3160958242901&q='
-    + asklocation + '&hours=' + askhours)
+    + asklocation + '&hours=' + askhours + "&days=3")
 # Get the JSON data from the response
 data = response.json()
 # Display the forecast info
