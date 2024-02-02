@@ -14,26 +14,25 @@ response = requests.get(
 data = response.json()
 # Display the forecast info
 # The [0] in the data is for the day. 0 is current day, 1 is tomorrow, 2 is day after tomorrow.
+days = int(int(askhours)/24)
+hours = int(askhours)%24
 print("This forecast is for the county of " + data['location']['name'] +
       " in the state/area of " + data['location']['region'])
-print("The temperature at", askhours, "hours will be",
-      data['forecast']['forecastday'][0]['hour'][int(askhours)]['temp_f'], "F")
+print("The temperature at", hours, "hours will be",
+      data['forecast']['forecastday'][days]['hour'][int(hours)]['temp_f'], "F")
 print("But it will feel like",
-      data['forecast']['forecastday'][0]['hour'][int(askhours)]['feelslike_f'],
+      data['forecast']['forecastday'][days]['hour'][int(hours)]['feelslike_f'],
       "F")
 print("The wind speed will be",
-      data['forecast']['forecastday'][0]['hour'][int(askhours)]['wind_mph'],
+      data['forecast']['forecastday'][days]['hour'][int(hours)]['wind_mph'],
       "mph")
 print("The humidity will be",
-      data['forecast']['forecastday'][0]['hour'][int(askhours)]['humidity'],
+      data['forecast']['forecastday'][days]['hour'][int(hours)]['humidity'],
       "%")
 print("The cloud cover will be",
-      data['forecast']['forecastday'][0]['hour'][int(askhours)]['cloud'], "%")
+      data['forecast']['forecastday'][days]['hour'][int(hours)]['cloud'], "%")
 print("The uv index will be",
-      data['forecast']['forecastday'][0]['hour'][int(askhours)]['uv'])
+      data['forecast']['forecastday'][days]['hour'][int(hours)]['uv'])
 print(
-    "the chance of raining will be", data['forecast']['forecastday'][0]['hour']
-    [int(askhours)]['chance_of_rain'], "%")
-print(
-"the temp tomorrow is", data['forecast']['forecastday'][1]['hour']
-[int(askhours)]['temp_f'], "%")
+    "the chance of raining will be", data['forecast']['forecastday'][days]['hour']
+    [int(hours)]['chance_of_rain'], "%")
