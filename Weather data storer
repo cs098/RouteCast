@@ -1,0 +1,32 @@
+import json
+import requests
+
+locations = []
+
+def getTemps(location):
+# Make a GET request to the URL
+  response = requests.get(
+    'https://api.weatherapi.com/v1/forecast.json?key=d64b86a0b5be44fd9d3160958242901&q='
+    + location + 
+  "&days=3")
+# Get the JSON data from the response
+  data = response.json()
+# Display the forecast info
+# The [0] in the data is for the day. 0 is current day, 
+#1 is tomorrow, 2 is day after tomorrow.
+
+  temps = []
+#for below line, real thing would go to range 72
+#but it is 8 for simplicity right now
+  for i in range(8):
+    temp = data['forecast']['forecastday'][int(int(i)/24)]  ['hour'][int(int(i)%24)]['temp_f']
+    temps.append(temp)
+
+  locations.append(temps)
+
+while True:
+  
+  asklocation = input(
+    "What is your location? Ex. -123,-23- or -Henrico- or -  Henrico Virginia- ")
+  getTemps(asklocation)
+  print("here is the current locations list: " + str(locations))
