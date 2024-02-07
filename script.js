@@ -39,7 +39,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
       origin: start,
       destination: end,
       waypoints: waypts,
-      optimizeWaypoints: true,
+      optimizeWaypoints: true, //optimizes order of points for fastest route, idk if we need this
       travelMode: google.maps.TravelMode.DRIVING, //mode can be changed if needed
     },
       //checks if locations are valid 
