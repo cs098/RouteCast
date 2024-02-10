@@ -22,25 +22,32 @@ function initMap() {
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-  
-  //destinations on route
-  var start = "Richmond, VA";
-  var end = "New York, New York";
-  var waypts = []; //holds object for each stop
-  //add a loop later to push every stop we need (see if latitudes and longitudes work?)***
-  waypts.push({
-    location: "Maryland, DE",
-    stopover: true
-  });
+  var wayptsHTML = document.querySelectorAll(".point"); //holds input element for each stop
+  var waypts = []; //holds location info for each stop
+
+  //iterates through all waypoints (inbetween points)
+  for (var i = 0; i < wayptsHTML.length; i++) {
+    if (wayptsHTML.item(i).value != "") { //ensures input isn't blank
+      waypts.push({
+        location: wayptsHTML.item(i).value,
+        stopover: false
+      });
+    }
+  }
+
+  //checks if at least 2 points (origin and destination) have been entered
+  if (waypts.length < 2) {
+    return; //ends function if less than 2 points
+  }
 
   //calculates route
   directionsService
     .route({
-      origin: start,
-      destination: end,
+      origin: waypts[0].location,
+      destination: waypts[waypts.length-1].location,
       waypoints: waypts,
-      optimizeWaypoints: true, //optimizes order of points for fastest route, idk if we need this
-      travelMode: google.maps.TravelMode.DRIVING, //mode can be changed if needed
+      optimizeWaypoints: false, //optimizes order of points for fastest route, idk if we need this
+      travelMode: google.maps.TravelMode.WALKING, //mode can be changed if needed
     },
       //checks if locations are valid 
       function(response, status) {
