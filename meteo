@@ -4,7 +4,20 @@ import json
 lat = input("input latitude: ")
 long = input("input longitude: ")
 
+
+
+
 #GET CURRENT WEATHER DATA
 url_data=f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={long}&minutely_15=temperature_2m,wind_speed_10m,visibility,weather_code&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_minutely_15=7"
 response=requests.get(url_data).json() #get data response in json
-print(response["minutely_15"]["wind_speed_10m"]) #print keys
+temperature_data = response["minutely_15"]["temperature_2m"]
+wind_speed_data = response["minutely_15"]["wind_speed_10m"]
+visibility_data = response["minutely_15"]["visibility"]
+weather_code_data = response["minutely_15"]["weather_code"]
+["visibility"]
+time_data = response["minutely_15"]["time"]
+print(temperature_data)
+print(wind_speed_data)
+print(visibility_data)
+print(weather_code_data)
+print(time_data)
