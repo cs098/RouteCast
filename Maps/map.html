@@ -15,8 +15,18 @@
   <div class="container">
     <div id="map">
       <script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuEhEGg1Cx3AEgtYJwLVeTs2ZWWTQa8VE&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuEhEGg1Cx3AEgtYJwLVeTs2ZWWTQa8VE&loading=async&libraries=places&callback=initMap">
       </script>
+
+    </div>
+    <div class="pac-card" id="pac-card">
+      <div>
+        <div id="title">Autocomplete search</div>
+        <div id="type-selector" class="pac-controls">
+ 
+      <div id="pac-container">
+        <input id="pac-input" type="text" placeholder="Enter a location" />
+      </div>
     </div>
 
     <div class="card">
