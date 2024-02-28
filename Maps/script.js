@@ -13,6 +13,34 @@ function initMap() {
     mapTypeControl: false
 
   });
+
+  const options = {
+    fields: ["formatted_address", "geometry", "name"],
+    strictBounds: false,
+  };
+
+
+  const input = document.getElementById("inputenter");
+  const input1 = document.getElementById("inputenter1");
+  const input2 = document.getElementById("inputenter2");
+  const input3 = document.getElementById("inputenter3");
+
+  const autocomplete = new google.maps.places.Autocomplete(input, options);
+  autocomplete.bindTo("bounds", map);
+  
+  const autocomplete1 = new google.maps.places.Autocomplete(input1, options);
+  autocomplete.bindTo("bounds", map);
+
+    
+  const autocomplete2 = new google.maps.places.Autocomplete(input2, options);
+  autocomplete.bindTo("bounds", map);
+
+    
+  const autocomplete3 = new google.maps.places.Autocomplete(input3, options);
+  autocomplete.bindTo("bounds", map);
+
+
+
   
   //something to do with rendering route?
   directionsRenderer.setMap(map);
