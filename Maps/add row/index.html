@@ -1,1 +1,37 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="script.js"></script>
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div id="map">
+      <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuEhEGg1Cx3AEgtYJwLVeTs2ZWWTQa8VE&callback=initMap">
+      </script>
+    </div>
+
+    <div class="card">
+      <h2 class="h22">Enter Location Details</h2>
+      <div class="card_text">
+        <input class="search_bar point" type="text" placeholder="Enter Starting Point">
+        <div id="way_points">   <!-- stores extra points if added -->       
+        </div>
+        <input class="search_bar point" type="text" placeholder="Enter Destination">
+        <button class="search_bar" onclick="addPoint()"> Add Point </button>
+        <button class="search_bar" onclick="removePoint()"> Remove Point </button>
+        <button class="search_bar" onclick="initMap()"> Search </button>
+      </div>
+
+
+</body>
+
+</html>
