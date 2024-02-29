@@ -139,12 +139,5 @@ var totalDist;
           points.push(polyline.GetPointAtDistance(distanceDone));
           distanceDone+=interval;
         }
-        var div = document.getElementById("info");
-        div.innerHTML="";
-        var text = "";
-        for(var i=0; i<points.length; i++){
-          text = text + points[i] + " ";
-        }
-        div.innerHTML = text;
       }
 window.initMap = initMap;
