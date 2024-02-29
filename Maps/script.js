@@ -4,6 +4,8 @@ var map;
 
 function initMap() {
 
+  initEpolys();
+
   //for displaying route
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
