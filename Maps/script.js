@@ -1,8 +1,19 @@
+var polyline;
+var points;
+var map;
+
 function initMap() {
 
   //for displaying route
   const directionsService = new google.maps.DirectionsService();
   const directionsRenderer = new google.maps.DirectionsRenderer();
+
+  polyline = new google.maps.Polyline({
+    path: [],
+    strokeColor: '#FF0000',
+    strokeWeight: 3
+      });
+  points = [];
 
   //initializes map
   const map = new google.maps.Map(document.getElementById("map"), {
@@ -80,11 +91,60 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
       //checks if locations are valid 
       function(response, status) {
         if (status == google.maps.DirectionsStatus.OK) {
+           polyline.setPath([]);
+          var bounds = new google.maps.LatLngBounds();
+          startLocation = new Object();
+          endLocation = new Object();
           directionsRenderer.setDirections(response); //renders route
+          var legs = response.routes[0].legs;
+          startLocation.latlng = legs[0].start_location;
+          startLocation.address = legs[0].start_address;
+          endLocation.latlng = legs[legs.length-1].end_location;
+          endLocation.address = legs[legs.length-1].end_address;
+          for (i=0;i<legs.length;i++) {
+            var steps = legs[i].steps;
+            for (j=0;j<steps.length;j++) {
+              var nextSegment = steps[j].path;
+              for (k=0;k<nextSegment.length;k++) {
+                polyline.getPath().push(nextSegment[k]);
+                bounds.extend(nextSegment[k]);
+              }
+            }
+          }
+  
+          polyline.setMap(map);
+
+          computeTotalDistance(response);
         } else {
           alert("failed to display route"); //fail message
         }
       });
 }
 
+var totalDist;
+      function computeTotalDistance(result) {
+      totalDist = 0;
+      var myroute = result.routes[0];
+      for (i = 0; i < myroute.legs.length; i++) {
+        totalDist += myroute.legs[i].distance.value;   
+      }
+//total distance is in meters
+      addPoints()
+      }
+
+      function addPoints() {
+        var interval = 16093.4; //the amount of meters in 10 miles
+        var distanceDone = 0;
+        while(distanceDone<totalDist){
+          points.push(polyline.GetPointAtDistance(distanceDone));
+          distanceDone+=interval;
+        }
+        var div = document.getElementById("info");
+        div.innerHTML="";
+        var text = "";
+        for(var i=0; i<points.length; i++){
+          text = text + points[i] + " ";
+        }
+        div.innerHTML = text;
+      }
 window.initMap = initMap;
