@@ -22,24 +22,25 @@
     </div>
 
     <div class="location-card">
-      <h2 class="card-title">Enter Location Details</h2>
+      <h2 class="card-title">Enter Route Details</h2>
+        
         <div class="location-input">
-          <label for="location1">Point 1:</label>
-          <input class="search_bar point" type="text" id="inputenter" name="location1" placeholder="Enter Location">
-        </div>
+          <label>Point 1:</label> <!-- removed label since it seems unecessary to give a name for each point -->
+          <input class="search_bar point" type="text" id="inputenter" placeholder="Enter Location">
+        </div>   
+        
         <div class="location-input">
-          <label for="location2">Point 2:</label>
-          <input class="search_bar point" type="text" id="inputenter1" name="location2" placeholder="Enter Location">
+          <label>Point 2:</label>
+          <input class="search_bar point" type="text" id="inputenter1" placeholder="Enter Location">
         </div>
-        <div class="location-input">
-          <label for="location3">Point 3:</label>
-          <input class="search_bar point" type="text" id="inputenter2" name="location3" placeholder="Enter Location">
+
+        <div id="stopPoints"></div>  <!-- stores extra points if added -->
+
+        <div id="buttons">
+          <button type="submit" onclick="initMap()" class="search-button">Search</button>
+          <button onclick="addSearchBar()"> Add Point </button>
+          <!--<button onclick="removePoint()"> Remove Point </button>-->
         </div>
-        <div class="location-input">
-          <label for="location4">Point 4:</label>
-          <input class="search_bar point" type="text" id="inputenter3" name="location4" placeholder="Enter Location">
-        </div>
-        <button type="submit" onclick="initMap()" class="search-button">Search</button>
     </div>
 
 
