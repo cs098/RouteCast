@@ -164,7 +164,7 @@ body {
   }
   
   input[type="text"] {
-    width: 95%; /* Full width for each input */
+    width: 85%; /* Full width for each input */
     padding: 10px;
     border: 1px solid #ccc; /* Light gray border for inputs */
     border-radius: 3px; /* Rounded corners for inputs */
@@ -182,4 +182,14 @@ body {
   
   .search-button:hover {
     background-color: #45A049; /* Slightly darker green on hover */
+  }
+
+  .delete {
+    width: 20px;
+    float: none;
+    opacity: 50%;
+  }
+  
+  .delete:hover {
+    opacity: 100%;
   }
