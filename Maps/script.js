@@ -26,40 +26,32 @@ function initMap() {
     mapTypeControl: false
 
   });
-
-  const options = {
-    fields: ["formatted_address", "geometry", "name"],
-    strictBounds: false,
-  };
-
-
-  const input = document.getElementById("inputenter");
-  const input1 = document.getElementById("inputenter1");
-  const input2 = document.getElementById("inputenter2");
-  const input3 = document.getElementById("inputenter3");
-
-  const autocomplete = new google.maps.places.Autocomplete(input, options);
-  autocomplete.bindTo("bounds", map);
   
-  const autocomplete1 = new google.maps.places.Autocomplete(input1, options);
-  autocomplete.bindTo("bounds", map);
-
-    
-  const autocomplete2 = new google.maps.places.Autocomplete(input2, options);
-  autocomplete.bindTo("bounds", map);
-
-    
-  const autocomplete3 = new google.maps.places.Autocomplete(input3, options);
-  autocomplete.bindTo("bounds", map);
-
-
-
-  
+  initAutocomplete(map);
   //something to do with rendering route?
   directionsRenderer.setMap(map);
   
   //calls function below
   calculateAndDisplayRoute(directionsService, directionsRenderer);
+}
+
+//initializing autocomplete inputs
+function initAutocomplete(map) { //is parameter necessary? (see commented out line)
+  
+  //used in creating autocomplete
+  const options = {
+    fields: ["formatted_address", "geometry", "name"],
+    strictBounds: false,
+  };
+
+  //stores autocompletes in list
+  autocompletes = [];
+  var inputs = document.getElementsByClassName("point");
+  for (i = 0; i < inputs.length; i++) {
+    autocompletes.push(new google.maps.places.Autocomplete(inputs[i], options));
+  }
+  //autocomplete.bindTo("bounds", map);
+
 }
 
 function calculateAndDisplayRoute(directionsService, directionsRenderer) {
@@ -121,6 +113,32 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
           alert("failed to display route"); //fail message
         }
       });
+}
+
+//when user adds point to route
+function addSearchBar() {
+  //gets div where new input will go
+  var stopPointsDiv = document.getElementById("stopPoints");
+  //creates class for label and search bar to go in
+  var newDiv = document.createElement("div");
+  newDiv.className = "location-input";
+  //creates label
+  var newLabel = document.createElement("label");
+  newLabel.innerText = "Point " + (document.getElementsByClassName("point").length+1) + ":";
+  //creates search bar
+  var newSearchBar = document.createElement("input");
+  newSearchBar.type = "text";
+  newSearchBar.className = "search_bar point stoppt";
+  newSearchBar.placeholder = "Enter Location";
+  //appending elements to divs
+  newDiv.appendChild(newLabel);
+  newDiv.appendChild(newSearchBar)
+  stopPointsDiv.appendChild(newDiv);
+  initAutocomplete();
+}
+
+function removeSearchBar() {
+
 }
 
 var totalDist;
