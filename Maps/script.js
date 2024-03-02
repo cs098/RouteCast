@@ -135,7 +135,7 @@ function addSearchBar() {
   var newDel = document.createElement("img");
   newDel.className = "delete";
   newDel.setAttribute("onclick", "removeSearchBar(this)");
-  newDel.setAttribute("src", "C:\\Classes\\Weather Tracker App\\My Version\\myGetPoints\\icons8-delete-30.png");
+  newDel.setAttribute("src", "Maps/icons8-delete-30.png");
   //appending elements to divs
   newDiv.appendChild(newLabel);
   newDiv.appendChild(newSearchBar);
