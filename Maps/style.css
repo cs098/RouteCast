@@ -186,10 +186,10 @@ body {
 
   .delete {
     width: 20px;
-    float: none;
     opacity: 50%;
   }
   
   .delete:hover {
     opacity: 100%;
+    cursor: pointer;
   }
