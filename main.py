@@ -1,15 +1,17 @@
 import json
 import requests
 
-asklocation = input(
-    "What is your location? Ex. -123,-23- or -Henrico- or -Henrico Virginia- ")
+# -123,-23
+
+lat = input("input latitude: ")
+long = input("input longitude: ")
 askhours = input(
     "For what hour today would you like to get the forecast for? ")
 
 # Make a GET request to the URL
 response = requests.get(
     'https://api.weatherapi.com/v1/forecast.json?key=d64b86a0b5be44fd9d3160958242901&q='
-    + asklocation + "&days=3")
+    + lat + ", " + long + "&days=3")
 # Get the JSON data from the response
 data = response.json()
 # Display the forecast info
@@ -39,6 +41,7 @@ print(
 print(
     "weather code is", data['forecast']['forecastday'][days]['hour'][int(
         hours)]['condition']['text'])
+print(data['forecast']['forecastday'][days]['hour'][int(hours)]['vis_miles'])
 
 temp = data['forecast']['forecastday'][days]['hour'][int(hours)]['temp_f']
 tempfeellike = data['forecast']['forecastday'][days]['hour'][int(
@@ -52,6 +55,8 @@ rainchance = data['forecast']['forecastday'][days]['hour'][int(
     hours)]['chance_of_rain']
 weathercode = data['forecast']['forecastday'][days]['hour'][int(
     hours)]['condition']['text']
+visibility = data['forecast']['forecastday'][days]['hour'][int(
+    hours)]['vis_miles']
 
 badstufflist = [
     'Mist', 'Patchy rain possible', 'Patchy snow possible',
@@ -69,7 +74,24 @@ badstufflist = [
     'Light snow showers', 'Moderate or heavy snow showers',
     'Patchy light rain with thunder', 'Moderate or heavy snow with thunder'
 ]
+print("now for the meteo stuff")
+url_data=f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={long}&minutely_15=temperature_2m,wind_speed_10m,visibility,weather_code&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto&forecast_minutely_15=7"
+responsemeteo=requests.get(url_data).json() #get data response in json
+temperature_data = responsemeteo["minutely_15"]["temperature_2m"]
+wind_speed_data = responsemeteo["minutely_15"]["wind_speed_10m"]
+visibility_data = responsemeteo["minutely_15"]["visibility"]
+weather_code_data = responsemeteo["minutely_15"]["weather_code"]
+time_data = responsemeteo["minutely_15"]["time"]
+print(temperature_data)
+print(wind_speed_data)
+print(visibility_data)
+print(weather_code_data)
+print(time_data)
+
+
+
 if weathercode in badstufflist:
-  print("It is bad weather")
+  if visibility < 5:
+    print("It is bad weather")
 else:
   print("It is not bad weather")
