@@ -175,4 +175,18 @@ var totalDist;
           distanceDone+=interval;
         }
       }
+
+//gets current location
+function getCurrentLoc() {
+  //simplified version
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+        console.log(position.coords.latitude);
+        console.log(position.coords.longitude);
+    });
+  } else {
+    alert("Browser does not support geolocation.");
+  }
+}
+
 window.initMap = initMap;
