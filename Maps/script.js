@@ -108,7 +108,7 @@ function calculateAndDisplayRoute(directionsService, directionsRenderer) {
   
           polyline.setMap(map);
 
-          computeTotalDistance(response);
+          addPoints(response);
         } else {
           alert("failed to display route"); //fail message
         }
@@ -156,25 +156,28 @@ function removeSearchBar(thisButton) {
   }
 }
 
-var totalDist;
-      function computeTotalDistance(result) {
-      totalDist = 0;
-      var myroute = result.routes[0];
-      for (i = 0; i < myroute.legs.length; i++) {
-        totalDist += myroute.legs[i].distance.value;   
-      }
-//total distance is in meters
-      addPoints()
-      }
+  function computeTotalDistance(result) {
+  totalDist = 0;
+  var myroute = result.routes[0];
+  for (i = 0; i < myroute.legs.length; i++) {
+    totalDist += myroute.legs[i].distance.value; 
+  }
+  return totalDist;
+  }
 
-      function addPoints() {
-        var interval = 16093.4; //the amount of meters in 10 miles
-        var distanceDone = 0;
-        while(distanceDone<totalDist){
-          points.push(polyline.GetPointAtDistance(distanceDone));
-          distanceDone+=interval;
-        }
+    function addPoints(response) {
+      var totalDist = computeTotalDistance(response);
+      const interval = 16093.4; //the amount of meters in 10 miles
+      var distanceDone = 0;
+      while(distanceDone<totalDist){
+        var point = new Object;
+        point.point = polyline.GetPointAtDistance(distanceDone)
+        point.distance = distanceDone;
+        point.timeToLocation = findTimeAlongPolyline(response, point.point);
+        points.push(point);
+        distanceDone+=interval;
       }
+    }
 
 //gets current location
 function getCurrentLoc() {
