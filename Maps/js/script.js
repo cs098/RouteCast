@@ -36,9 +36,9 @@ function initMap() {
   calculateAndDisplayRoute(directionsService, directionsRenderer);
 
   //marker example code - just for presentation / testing
-  addMarker(map, 37.792919,-77.487799,"C:\\Classes\\Weather Tracker App\\current version\\markerAssets\\!BfWsLv!Dw.png")
-  addMarker(map, 37.392919,-77.787799,"C:\\Classes\\Weather Tracker App\\current version\\markerAssets\\Bf!Ws!LvDw.png")
-  addMarker(map, 37.592919,-77.197799,"C:\\Classes\\Weather Tracker App\\current version\\markerAssets\\!Bf!WsLvDw.png")
+  addMarker(map, 37.792919,-77.487799,"markerAssets/!BfWsLv!Dw.png")
+  addMarker(map, 37.392919,-77.787799,"markerAssets/Bf!Ws!LvDw.png")
+  addMarker(map, 37.592919,-77.197799,"markerAssets/!Bf!WsLvDw.png")
 
 }
 
@@ -56,5 +56,29 @@ function addMarker(map, lat, lng, img) {
   
 }
 
+var totalDist;
+function computeTotalDistance(result) {
+      totalDist = 0;
+      var myroute = result.routes[0];
+      for (i = 0; i < myroute.legs.length; i++) {
+        totalDist += myroute.legs[i].distance.value;   
+      }
+//total distance is in meters
+      addPoints()
+}
+
+function addPoints() {
+  var interval = 16093.4; //the amount of meters in 10 miles
+  var distanceDone = 0;
+  while(distanceDone<=totalDist){
+    point = new Object();
+    point.LatLng = polyline.GetPointAtDistance(distanceDone);
+    time = findTimeAlongPolyline(result, point.LatLng);
+    point.timeTo = time; //in seconds
+    weatherFunction(point, time);
+    points.push(point);
+    distanceDone+=interval;
+  }
+}
+
 window.initMap = initMap;
-console.log(findTimeAlongPolyline(response, getCurrentLoc()));
