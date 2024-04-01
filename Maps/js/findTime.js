@@ -1,23 +1,3 @@
-var totalDist;
-function computeTotalDistance(result) {
-      totalDist = 0;
-      var myroute = result.routes[0];
-      for (i = 0; i < myroute.legs.length; i++) {
-        totalDist += myroute.legs[i].distance.value;   
-      }
-//total distance is in meters
-      addPoints()
-}
-
-function addPoints() {
-  var interval = 16093.4; //the amount of meters in 10 miles
-  var distanceDone = 0;
-  while(distanceDone<totalDist){
-    points.push(polyline.GetPointAtDistance(distanceDone));
-    distanceDone+=interval;
-  }
-}
-
 function getCurrentLoc() {
 
   //simplified version
