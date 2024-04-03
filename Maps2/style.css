@@ -1,0 +1,195 @@
+body {
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  
+  #map {
+    height:100%;
+    width: 100%;
+  }
+  
+
+  .card {
+    position: absolute;
+    right: 0;
+    width: 325px;
+    height: 200px;
+    background: whitesmoke;;
+    z-index: 2; 
+    right: 0;
+    border-bottom-left-radius: 25px;
+  }
+
+  
+  .card_text{
+    float: left;
+    margin-right: 10px;
+    padding-top: 7px;
+    padding-left: 18px;
+    font-weight: 550;
+    color: black;
+  }
+  
+  .search{
+    margin: 11px;
+    margin-right: 15px;
+    float: right;
+    font-weight: bolder;
+    color: black;
+  }
+  
+  
+  .search_bar{
+    margin-top: 10px;
+    width: 280px;
+    color: black;
+  }
+
+  .h22{
+      margin-left: 50px;
+  }
+
+  #description {
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+  }
+  
+  #infowindow-content .title {
+    font-weight: bold;
+  }
+  
+  #infowindow-content {
+    display: none;
+  }
+  
+  #map #infowindow-content {
+    display: inline;
+  }
+  
+
+
+  .pac-card {
+    position: absolute;
+    background-color: #fff;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
+    margin: 10px;
+    padding: 0 0.5em;
+    font: 400 18px Roboto, Arial, sans-serif;
+    overflow: hidden;
+    font-family: Roboto;
+    padding: 0;
+  }
+  
+  #pac-container {
+    padding-bottom: 12px;
+    margin-right: 12px;
+  }
+  
+  .pac-controls {
+    display: inline-block;
+    padding: 5px 11px;
+  }
+  
+  .pac-controls label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+  }
+  
+  #pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 400px;
+  }
+  
+  #pac-input:focus {
+    border-color: #4d90fe;
+  }
+  
+  #title {
+    color: #fff;
+    background-color: #4d90fe;
+    font-size: 25px;
+    font-weight: 500;
+    padding: 6px 12px;
+  }
+
+
+.location-card {
+    position: absolute;
+    background-color: #f5f5f5; /* Light gray background */
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 20px; /* Padding for inner content */
+    width: 350px; /* Adjust width as needed */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin: 0 auto; /* Center the card horizontally */
+  }
+  
+  .card-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 18px; /* Adjust font size as needed */
+  }
+  
+  .location-input {
+    margin-bottom: 10px; /* Spacing between input fields */
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"] {
+    width: 85%; /* Full width for each input */
+    padding: 10px;
+    border: 1px solid #ccc; /* Light gray border for inputs */
+    border-radius: 3px; /* Rounded corners for inputs */
+  }
+  
+  .search-button {
+    background-color: #4CAF50; /* Green color for button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .search-button:hover {
+    background-color: #45A049; /* Slightly darker green on hover */
+  }
+
+  .delete {
+    width: 20px;
+    opacity: 50%;
+  }
+  
+  .delete:hover {
+    opacity: 100%;
+    cursor: pointer;
+  }
