@@ -24,7 +24,7 @@ async function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 10,
     center: { lat: 37.682819, lng: -77.587799 },
-
+    mapId: '43d5ecf9d4d9640d',
     streetViewControl: false,
     fullscreenControl: false,
     mapTypeControl: false
@@ -98,7 +98,7 @@ async function initMap() {
   //calls function below
   calculateAndDisplayRoute(directionsService, directionsRenderer);
 
-  function addMarker(map, point) {
+  function addMarker(point, map) {
 
     if (!point || !point.LatLng){
       return;
@@ -113,46 +113,53 @@ async function initMap() {
       position: { lat: point.LatLng.lat(), lng: point.LatLng.lng() },
       title: point.LatLng.lat() + ", " + point.LatLng.lng(),
       content: contentNode, // Use the created div element as content
-      //gmpClickable: true,
-      //"gmp-click": displayInfo(point),
+      attributes:{
+        "gmp-click": displayInfo(point)
+      },
+      gmpClickable: true,
       map: map,
     });
 
-    markers.push(advancedMarker);    
+    markers.push(advancedMarker); 
+  }
+
+  function addAllMarkers(points){
+    markers = [];
+    points.forEach(point =>{
+      if(point.iconName == undefined){
+        return
+      }
+      if(!(point.iconName == "")){
+        addMarker(point, map)
+      }
+      else{
+        point.iconName = "Gw"
+        addMarker(point, map)
+      }
+      
+    })
   }
   
-  function displayInfo(point){
-    box = document.createElement('div');
-  
-    for(let i=0;i<point.dates.length;i++){
-  
-    }
-  }
-  
-  var totalDist;
-  function computeTotalDistance(result) {
-        totalDist = 0;
+  async function computeTotalDistance(result) {
+        var totalDist = 0;
         var myroute = result.routes[0];
         for (i = 0; i < myroute.legs.length; i++) {
           totalDist += myroute.legs[i].distance.value;   
         }
   //total distance is in meters
-        pointA = new Object();
-        pointA.LatLng = new google.maps.LatLng(37.5407, -77.4360);
-        pointA.iconName = "BsBfLv";
-        addMarker(map, pointA);
-        addPoints(result)
+        await addPoints(result, totalDist)
+        addAllMarkers(points)
   }
   
-  function addPoints(result) {
+  async function addPoints(result, totalDist) {
     var interval = 16093.4; //the amount of meters in 10 miles
     var distanceDone = 0;
     while(distanceDone<=totalDist){
-      point = new Object();
+      var point = new Object();
       point.LatLng = polyline.GetPointAtDistance(distanceDone);
       time = findTimeAlongPolyline(result, point.LatLng);
       point.timeTo = time; //in seconds
-      weatherFunction(point, time);
+      await weatherFunction(point, time);
       points.push(point);
       distanceDone+=interval;
     }
