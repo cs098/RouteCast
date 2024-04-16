@@ -167,4 +167,19 @@ async function initMap() {
 
 }
 
+function displayETA() {
+  box = document.querySelector("#eta");
+  box.innerText = "[ETA TIME]";
+}
+
+function displayWeather() {
+  box = document.querySelector("#weather");
+  box.innerText = "[WEATHER DETAILS]";
+}
+
+function displayDirections() {
+  box = document.querySelector("#directions");
+  box.innerText = "[NEXT DIRECTION]";
+}
+
 window.initMap = initMap;
