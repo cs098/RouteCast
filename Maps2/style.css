@@ -193,3 +193,38 @@ body {
     opacity: 100%;
     cursor: pointer;
   }
+
+/*bottom bar*/
+
+  footer{
+    background-color: rgb(115, 138, 115);
+    position: fixed;
+    bottom:0;
+    right:0;
+    left:0;
+    width:100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between; 
+  }
+
+.info_bar {
+  background-color: lightgrey;
+  display: inline-block;
+  padding: 10px;
+  text-align: center; 
+  height: 20px;
+  margin-right: 45px;
+}
+
+#eta {
+  width: 20%;
+}
+
+#weather {
+  width: 35%;
+}
+
+#directions {
+  width: 35%;
+}
