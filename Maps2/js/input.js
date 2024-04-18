@@ -56,3 +56,13 @@ function addSearchBar() {
       labels[i].innerHTML = "Point " + (i+1) + ":";
     }
   }
+
+  function hideInstruct() {
+    instruct = document.querySelector("#instructions");
+    instruct.style.display = "none";
+  }
+  
+  function showInstruct() {
+    instruct = document.querySelector("#instructions");
+    instruct.style.display = "block";
+  }
