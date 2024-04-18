@@ -7,9 +7,9 @@
   <title>replit</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <script src="js/epolysv3.js"></script>
+  <script src="js/displayRoute.js"></script>
   <script src="js/findTime.js"></script>
   <script src="js/script.js"></script>
-  <script src="js/displayRoute.js"></script>
   <script src="js/input.js"></script>
   <script src="js/weather.js"></script>
 
@@ -18,10 +18,13 @@
 <body>
 
   <div class="container">
-    <div id="map">
-      <script async
+    <script async
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuEhEGg1Cx3AEgtYJwLVeTs2ZWWTQa8VE&loading=async&libraries=places&callback=initMap">
       </script>
+    <div id="map">
+    <div id="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="">&times;</a>
+    </div>
 
     </div>
 
