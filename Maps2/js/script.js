@@ -106,19 +106,24 @@ async function initMap() {
 
     // Create a div element
     const contentNode = document.createElement('div');
-    // Set its HTML content
-    contentNode.innerHTML = `<img src="markerAssets/${point.iconName}.png" alt="${point.iconName}" width="50" height="50">`;
 
     var advancedMarker = new AdvancedMarkerElement({
       position: { lat: point.LatLng.lat(), lng: point.LatLng.lng() },
       title: point.LatLng.lat() + ", " + point.LatLng.lng(),
       content: contentNode, // Use the created div element as content
-      attributes:{
-        "gmp-click": displayInfo(point)
-      },
-      gmpClickable: true,
       map: map,
     });
+
+    // Set its HTML content
+    if(point.iconName !== "Gw"){
+      contentNode.innerHTML = `<img src="markerAssets/${point.iconName}.png" alt="${point.iconName}" width="50" height="50">`;
+      google.maps.event.addListener(advancedMarker, 'click', function() {
+        displayInfo(point);
+      });
+    }
+    else{
+      contentNode.innerHTML = `<img src="markerAssets/${point.iconName}.png" alt="${point.iconName}" width="20" height="20">`;
+    }
 
     markers.push(advancedMarker); 
   }
@@ -129,14 +134,7 @@ async function initMap() {
       if(point.iconName == undefined){
         return
       }
-      if(!(point.iconName == "")){
-        addMarker(point, map)
-      }
-      else{
-        point.iconName = "Gw"
-        addMarker(point, map)
-      }
-      
+      addMarker(point, map)
     })
   }
   
@@ -160,7 +158,9 @@ async function initMap() {
       time = findTimeAlongPolyline(result, point.LatLng);
       point.timeTo = time; //in seconds
       await weatherFunction(point, time);
-      points.push(point);
+      if(point.iconName !== undefined){
+        points.push(point);
+      }
       distanceDone+=interval;
     }
   }
