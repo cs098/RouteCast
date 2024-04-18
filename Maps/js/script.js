@@ -28,6 +28,19 @@ function initMap() {
     mapTypeControl: false
 
   });
+
+  directionsRenderer.setMap(map);
+  directionsRenderer.setPanel(document.getElementById("sidebar"));
+
+  const control = document.getElementById("floating-panel");
+
+  map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
+
+  const onChangeHandler = function () {
+  };
+
+  document.getElementById("Start").addEventListener("change", onChangeHandler);
+  document.getElementById("Final").addEventListener("change", onChangeHandler);
   
   initAutocomplete(map);
   //something to do with rendering route?
@@ -40,6 +53,25 @@ function initMap() {
   addMarker(map, 37.392919,-77.787799,"markerAssets/Bf!Ws!LvDw.png")
   addMarker(map, 37.592919,-77.197799,"markerAssets/!Bf!WsLvDw.png")
 
+}
+
+function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+  const start = document.getElementById("Start").value;
+  const end = document.getElementById("Final").value;
+  const selectedMode = Driving;
+
+  directionsService
+    .route({
+      origin: start,
+      destination: end,
+      travelMode: google.maps.TravelMode[selectedMode],
+    })
+    .then((response) => {
+      directionsRenderer.setDirections(response);
+    })
+    .catch((e) =>
+      window.alert("Directions request failed due to " + status)
+    );
 }
 
 function addMarker(map, lat, lng, img) {
@@ -55,6 +87,7 @@ function addMarker(map, lat, lng, img) {
   });
   
 }
+
 
 var totalDist;
 function computeTotalDistance(result) {
