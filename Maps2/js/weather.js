@@ -12,37 +12,41 @@ async function weatherFunction(point, time) {
     const temp = data.forecast.forecastday[days].hour[hour].temp_f;
     const wind = data.forecast.forecastday[days].hour[hour].wind_mph;
     const weatherCode = data.forecast.forecastday[days].hour[hour].condition.code;
-    const visibility = data.forecast.forecastday[days].hour[hour].vis_miles;
 
-    const badStuffList = [1114,1117,1135,1147,1192,1195,1201,1207,1225,1237,1243,1246,1252,1258,1261,1264,1276,1282,1222]
-    const notibleStuffList =[1063,1066,1069,1072,1087,1168,1171,1183,1189,1198,1204,1216,1219,1249]
+    const badStuffList = [1114,1117,1147,1192,1195,1201,1207,1225,1237,1243,1246,1252,1258,1261,1264,1276,1282,1222]
+    const notibleStuffList =[1135,1168,1171,1183,1186,1189,1198,1204,1213,1216,1219,1222,1240,1249,1255,1273,1279]
 
     var isBad = false;
-    let iconName = "";
-    if (badStuffList.includes(weatherCode) || visibility <= 4 || wind >= 25 || temp < 10){
-      isBad = true;
-      iconName="Bs";
-        if (temp < 10) iconName += "Bf";
-        if (wind >= 25) iconName += "Ws";
-        if (visibility <= 4) iconName += "Lv";
-    }
+    let iconName = "Gw";
 
-    if(notibleStuffList.includes(weatherCode) || temp <= 32){
+    if(notibleStuffList.includes(weatherCode) || temp <= 32 || wind>=20){
       isBad = true;
       iconName="Ns";
     }
 
+    if (badStuffList.includes(weatherCode) || wind >= 25 || temp < 10){
+      isBad = true;
+      iconName="Bs";
+        if (temp < 10) iconName += "Bf";
+        if (wind >= 25) iconName += "Ws";
+    }
+
     point.iconName = iconName;
 
-    if(isBad )
-        meteoInfo(point, ints)
+    if(isBad){
+      meteoInfo(point, ints)
+    }
 
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error:" + error);
   }
+  await new Promise(resolve => setTimeout(resolve, 200));
 }
 
 async function meteoInfo(point, ints) {
+
+  const meteoDict = {0:"Clear Sky",1:"Mostly Clear",2:"Partly Cloudy",3:"Overcast",45:"Fog",48:"Freezing Fog",51:"Light Drizzle",53:"Moderate Drizzle",55:"Dense Drizzle",56:"Light Freezing Drizzle",57:"Dense Freezing Drizzle",61:"Slight Rain",63:"Moderate Rain",65:"Heavy Rain",66:"Light Freezing Rain",67:"Heavy Freezing Rain",71:"Slight Snow",73:"Moderate Snow",75:"Heavy Snow",77:"Snow Grains",80:"Slight Showers",81:"Moderate Showers",82:"Violent Showers",85:"Slight Snow Showers",86:"Heavy Snow Showers",95:"Thunderstorm",96:"Thunderstorm With Small Hail",99:"Thunderstorm With Heavy Hail",}
+
   let maxRange = -2;
 
   if (ints < 2) 
@@ -55,25 +59,37 @@ async function meteoInfo(point, ints) {
     const response = await fetch(urlData);
     const responseData = await response.json();
 
+    console.log("past api call")
+
     var dates = [];
-    //addMinutes(Date(Date.now()), (ints+maxRange+2)*15);
     for(let i=0; i>maxRange; i--){
-        let date = addMinutes(Date(Date.now()), (ints+maxRange+2-i)*15);
+        let date = addMinutes(new Date(), (ints+maxRange+2-i)*15);
         dates.push(date);
     }
-
+    
     point.tempList = responseData.minutely_15.temperature_2m.slice(maxRange);
     point.windList = responseData.minutely_15.wind_speed_10m.slice(maxRange);
     point.visList = responseData.minutely_15.visibility.slice(maxRange);
-    point.weatherList = responseData.minutely_15.weather_code.slice(maxRange);
+    for (let i = 0; i < point.visList.length; i++) {
+      point.visList[i] /= 5280;
+    }
+    var weatherList = responseData.minutely_15.weather_code.slice(maxRange);
+    point.weatherList = []
+    weatherList.forEach(item => {
+      point.weatherList.push(meteoDict[item])
+    })
     point.dates = dates;
+    console.log(point)
 
   } catch (error) {
-    console.error("Error:", error);
+    console.error("Error:" + error);
     return [];
   }
 }
 
 function addMinutes(date, minutes) {
+    if (!(date instanceof Date || !isNaN(date.getTime()))) {
+      return; // return undefined if date is not a valid Date object
+    }
     return new Date(date.getTime() + minutes*60000);
 }
