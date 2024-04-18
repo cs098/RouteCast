@@ -189,7 +189,7 @@ body {
     opacity: 50%;
   }
   
-  .delete:hover {
+  .delete:hover, #instructionsClose:hover, #info_img:hover {
     opacity: 100%;
     cursor: pointer;
   }
@@ -227,4 +227,54 @@ body {
 
 #directions {
   width: 35%;
+}
+
+#info {
+  position:relative;
+  top:-2px; /*hard coded to fix position*/
+  background-color:transparent;
+}
+
+#info_img {
+  width:25px;
+  opacity: 70%;
+}
+
+/*instructions*/
+
+#instructions {
+  position:absolute;
+  height:70%;
+  width:60%;
+  left:20%;
+  top:10%;
+  background-color:white;
+  z-index:3; 
+  border-radius: 15px;
+  padding:15px;
+  overflow:scroll;
+}
+
+#instructionsClose {
+  opacity:70%;
+  float:right;
+  height:20px;
+}
+
+.app_name {
+  color: darkgreen;
+}
+
+#logo_key {
+  position:relative;
+  width:80%;
+  left:10%;
+}
+
+.center_text {
+  text-align:center;
+}
+
+.info_logo {
+  width:40px;
 }
