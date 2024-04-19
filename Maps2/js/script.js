@@ -172,7 +172,7 @@ async function initMap() {
   }
   
   //gets total duration along polyline
-  async function computeETA(result) {
+  function computeETA(result) {
     var totalDur = 0;
     var myroute = result.routes[0];
     for (i = 0; i < myroute.legs.length; i++) {
