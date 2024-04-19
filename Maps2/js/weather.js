@@ -68,7 +68,7 @@ async function weatherFunction(point, time) {
       for (let i = 0; i < tempList.length; i++) {
         const temp = tempList[i];
         if (temp <= 32 && temp > 10) {
-          if (iconName === "") {
+          if (iconName === "Gw") {
             iconName = "Ns";
             warning = "Warning for temperatures below freezing";
           } else {
@@ -102,7 +102,7 @@ async function weatherFunction(point, time) {
       for (let i = 0; i < windList.length; i++) {
         const wind = windList[i];
         if (wind < 25 && wind >= 18) {
-          if (iconName === "") {
+          if (iconName === "Gw") {
             iconName = "Ns";
             warning = "Warning for high wind speeds";
           } else {
@@ -117,7 +117,7 @@ async function weatherFunction(point, time) {
     for (let i = 0; i < visList.length; i++) {
       const vis = visList[i];
       if (vis < 3) {
-        if (iconName === "") {
+        if (iconName === "Gw") {
           iconName = "BsLv";
           warning = "Warning for extremely low visibility";
         } else if (iconName === "Ns") {
@@ -136,7 +136,7 @@ async function weatherFunction(point, time) {
       for (let i = 0; i < visList.length; i++) {
         const vis = visList[i];
         if (vis <= 32 && vis > 10) {
-          if (iconName === "") {
+          if (iconName === "Gw") {
             iconName = "Ns";
             warning = "Warning for temperatures below freezing";
           } else {
@@ -147,7 +147,7 @@ async function weatherFunction(point, time) {
       }
     }
 
-    if (iconName !== "") {
+    if (iconName !== "Gw") {
       var dates = [];
       for (let i = 0; i > maxRange; i--) {
         let date = addMinutes(new Date(), (ints + maxRange + 2 - i) * 15);
