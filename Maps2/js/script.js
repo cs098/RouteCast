@@ -89,6 +89,13 @@ async function initMap() {
             } else {
             alert("failed to display route"); //fail message
             }
+
+            //computes ETA
+            var eta = computeETA(response);
+            //converts promise to value - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
+            eta.then((value) => {
+              updateETA(value);
+            });
         });
   }
   
@@ -147,6 +154,16 @@ async function initMap() {
   //total distance is in meters
         await addPoints(result, totalDist)
         addAllMarkers(points)
+  }
+  
+  //gets total duration along polyline
+  async function computeETA(result) {
+    var totalDur = 0;
+    var myroute = result.routes[0];
+    for (i = 0; i < myroute.legs.length; i++) {
+      totalDur += myroute.legs[i].duration.value;   
+    }
+    return totalDur;
   }
   
   async function addPoints(result, totalDist) {
