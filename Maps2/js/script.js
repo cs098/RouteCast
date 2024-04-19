@@ -239,11 +239,11 @@ function updateETA(secLeft) {
   currTime = currDate.getTime(); //seconds since epoch at current time
   eta = currTime + secLeft*1000; //seconds since epoch at eta (converts from milliseconds -> seconds)
   currTime = new Date(currTime); //converts to date format
-  eta = new Date(eta); //converts to date format
-  if (currTime.getDate() == eta.getDate()) { //if current time and eta are same day
-    displayETA = eta.getHours() + ":" + eta.getMinutes();
+  etaDate = new Date(eta); //converts to date format
+  if (currTime.getDate() == etaDate.getDate()) { //if current time and eta are same day
+    displayETA = etaDate.getHours() + ":" + etaDate.getMinutes();
   } else { //if on separate days, include date
-    displayETA = eta.getMonth() + "/" + eta.getDate() + "  " + eta.getHours() + ":" + eta.getMinutes();
+    displayETA = etaDate.getMonth() + "/" + etaDate.getDate() + "  " + etaDate.getHours() + ":" + etaDate.getMinutes();
   }
   /*console.log(eta.substring(0,eta.indexOf("GMT")));*/
   box = document.querySelector("#eta");
