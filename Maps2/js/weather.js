@@ -27,140 +27,137 @@ async function weatherFunction(point, time) {
     }
 
     const weatherList = responseData.minutely_15.weather_code.slice(maxRange);
-    let iconName = "Gw"
-    let warning = ""
-    
-    weatherList.forEach(weatherCode => {
-      if(notibleStuffList.includes(weatherCode)){
-        iconName="Ns";
-        warning = "Warning for " + data.forecast.forecastday[days].hour[hour].condition.text
-        break
+    let iconName = "Gw";
+    let warning = "";
+
+    for (let i = 0; i < weatherList.length; i++) {
+      const weatherCode = weatherList[i];
+      if (notibleStuffList.includes(weatherCode)) {
+        iconName = "Ns";
+        warning = "Warning for " + data.forecast.forecastday[days].hour[hour].condition.text;
+        break;
       }
-    })
-
-    weatherList.forEach(weatherCode => {
-      if (badStuffList.includes(weatherCode)){
-        iconName="Bs";
-        warning = "Warning for " + data.forecast.forecastday[days].hour[hour].condition.text
-        break
-      } 
-    })
-
-    var tempBad = false
-
-    tempList.forEach(temp => {
-      if( temp <=10){
-        if(iconName == "Bs"){
-          iconName += "Bf"
-          warning += ", extremely low temperatures"
-        }
-        else{
-          iconName = "BsBf"
-          warning = "Warning for extremely low temperatures"
-        }
-        tempBad = true
-        break
-      }
-    })
-
-    if(!tempBad){
-      tempList.forEach(temp => {
-        if( temp <= 32 && temp>10){
-          if(iconName == ""){
-            iconName = "Ns"
-            warning = "Warning for temperatures below freezing"
-          }
-          else{
-            warning += ", temperatures below freezing"
-          }
-          break
-        }
-      })
     }
 
-    var windBad = false
-
-    windList.forEach(wind => {
-      if( wind >= 25){
-        if(iconName == "Bs" || iconName == "BsBf"){
-          iconName += "Ws"
-          warning += ", extremely high wind speeds"
-        }
-        else if(iconName == "Ns"){
-          iconName = "BsWs"
-          warning += ", extremely high wind speeds"
-        }
-        else{
-          iconName = "BsWs"
-          warning = "Warning for extremely high wind speeds"
-        }
-        windBad = true
-        break
+    for (let i = 0; i < weatherList.length; i++) {
+      const weatherCode = weatherList[i];
+      if (badStuffList.includes(weatherCode)) {
+        iconName = "Bs";
+        warning = "Warning for " + data.forecast.forecastday[days].hour[hour].condition.text;
+        break;
       }
-    })
-
-    if(!windBad){
-      windList.forEach(wind => {
-        if( wind < 25 && wind >= 18){
-          if(iconName == ""){
-            iconName = "Ns"
-            warning = "Warning for high wind speeds"
-          }
-          else{
-            warning += ", high wind speeds"
-          }
-          break
-        }
-      })
     }
 
-    var visBad = false
-
-    visList.forEach(vis => {
-      if( vis < 3){
-        if(iconName == ""){
-          iconName = "BsLv"
-          warning = "Warning for extremely low visibility"
-        } 
-        else if(iconName == "Ns"){
-          iconName = "BsLv"
-          warning += ", extremely low visibility"
+    var tempBad = false;
+    for (let i = 0; i < tempList.length; i++) {
+      const temp = tempList[i];
+      if (temp <= 10) {
+        if (iconName === "Bs") {
+          iconName += "Bf";
+          warning += ", extremely low temperatures";
+        } else {
+          iconName = "BsBf";
+          warning = "Warning for extremely low temperatures";
         }
-        else{
-          iconName += "Lv"
-          warning += ", extremely low visibility"
-        }
-        visBad = true
-        break
+        tempBad = true;
+        break;
       }
-    })
-
-    if(!visBad){
-      visList.forEach(vis => {
-        if( vis <= 32 && vis>10){
-          if(iconName == ""){
-            iconName = "Ns"
-            warning = "Warning for temperatures below freezing"
-          }
-          else{
-            warning += ", temperatures below freezing"
-          }
-          break
-        }
-      })
     }
 
-    if(iconName !== ""){
+    if (!tempBad) {
+      for (let i = 0; i < tempList.length; i++) {
+        const temp = tempList[i];
+        if (temp <= 32 && temp > 10) {
+          if (iconName === "") {
+            iconName = "Ns";
+            warning = "Warning for temperatures below freezing";
+          } else {
+            warning += ", temperatures below freezing";
+          }
+          break;
+        }
+      }
+    }
+
+    var windBad = false;
+    for (let i = 0; i < windList.length; i++) {
+      const wind = windList[i];
+      if (wind >= 25) {
+        if (iconName === "Bs" || iconName === "BsBf") {
+          iconName += "Ws";
+          warning += ", extremely high wind speeds";
+        } else if (iconName === "Ns") {
+          iconName = "BsWs";
+          warning += ", extremely high wind speeds";
+        } else {
+          iconName = "BsWs";
+          warning = "Warning for extremely high wind speeds";
+        }
+        windBad = true;
+        break;
+      }
+    }
+
+    if (!windBad) {
+      for (let i = 0; i < windList.length; i++) {
+        const wind = windList[i];
+        if (wind < 25 && wind >= 18) {
+          if (iconName === "") {
+            iconName = "Ns";
+            warning = "Warning for high wind speeds";
+          } else {
+            warning += ", high wind speeds";
+          }
+          break;
+        }
+      }
+    }
+
+    var visBad = false;
+    for (let i = 0; i < visList.length; i++) {
+      const vis = visList[i];
+      if (vis < 3) {
+        if (iconName === "") {
+          iconName = "BsLv";
+          warning = "Warning for extremely low visibility";
+        } else if (iconName === "Ns") {
+          iconName = "BsLv";
+          warning += ", extremely low visibility";
+        } else {
+          iconName += "Lv";
+          warning += ", extremely low visibility";
+        }
+        visBad = true;
+        break;
+      }
+    }
+
+    if (!visBad) {
+      for (let i = 0; i < visList.length; i++) {
+        const vis = visList[i];
+        if (vis <= 32 && vis > 10) {
+          if (iconName === "") {
+            iconName = "Ns";
+            warning = "Warning for temperatures below freezing";
+          } else {
+            warning += ", temperatures below freezing";
+          }
+          break;
+        }
+      }
+    }
+
+    if (iconName !== "") {
       var dates = [];
-      for(let i=0; i>maxRange; i--){
-        let date = addMinutes(new Date(), (ints+maxRange+2-i)*15);
+      for (let i = 0; i > maxRange; i--) {
+        let date = addMinutes(new Date(), (ints + maxRange + 2 - i) * 15);
         dates.push(date);
       }
       point.dates = dates;
-      point.weatherList = weatherList
-      point.tempList = tempList
-      point.windList = windList
-      point.visList = visList
+      point.weatherList = weatherList;
+      point.tempList = tempList;
+      point.windList = windList;
+      point.visList = visList;
     }
 
     point.iconName = iconName;
