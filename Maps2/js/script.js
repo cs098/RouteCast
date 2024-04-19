@@ -50,6 +50,9 @@ async function initMap() {
         return; //ends function if less than 2 points
     }
 
+    input = document.getElementById("location-card")
+    input.style.display="none"
+
     //calculates route
     directionsService
         .route({
@@ -145,6 +148,7 @@ async function initMap() {
     })
   }
   
+  var distanceCounter = 0
   async function computeTotalDistance(result) {
         var totalDist = 0;
         var myroute = result.routes[0];
@@ -154,6 +158,19 @@ async function initMap() {
   //total distance is in meters
         await addPoints(result, totalDist)
         addAllMarkers(points)
+        const contentNode = document.createElement('div')
+        contentNode.innerHTML = `<img src="arrow.png" width="25" height="25">`;
+        const path = polyline.getPath();
+        const firstPoint = path.getAt(0);
+        const car = new AdvancedMarkerElement({
+          position: { lat: firstPoint.lat(), lng: firstPoint.lng() },
+          title: "car",
+          content: contentNode, // Use the created div element as content
+          map: map,
+        });
+        setInterval(moveCar, 5000, car) //moves car at a fixed rate
+        setInterval(updatePoints, 1800000, result) //updates weather data of points
+        setInterval(resetCar, 900000, car) //resets car to where it actually is
   }
   
   //gets total duration along polyline
@@ -167,7 +184,7 @@ async function initMap() {
   }
   
   async function addPoints(result, totalDist) {
-    var interval = 16093.4; //the amount of meters in 10 miles
+    var interval = 24140.1; //meters in 15 miles
     var distanceDone = 0;
     while(distanceDone<=totalDist){
       var point = new Object();
@@ -180,6 +197,38 @@ async function initMap() {
       }
       distanceDone+=interval;
     }
+  }
+
+  function updatePoints(response){
+    currentLoc = getCurrentLoc()
+    time = findTimeAlongPolyline(response, currentLoc)
+    for(var i=points.length-1; i>=0; i--){
+      let point = points[i]
+      point.timeTo -= time
+      if(point.timeTo>=0){
+        weatherFunction(point, point.timeTo)
+      }
+      else if(i+2 <= points.length){
+        points = points.slice(0,i).concat(points.slice(i+1))
+      }
+      else{
+        points = points.slice(0, i)
+      }
+    }
+    markers = []
+    addAllMarkers(points)
+  }
+
+  function moveCar(marker){
+    let position = polyline.GetPointAtDistance(distanceCounter)
+    marker.position = {lat: position.lat(), lng: position.lng()}
+    distanceCounter += 134.112 //meters travelled by a car moving 60mph in 5 seconds
+  }
+
+  function resetCar(marker){
+    let position = getCurrentLoc()
+    marker.position = {lat: position.lat(), lng: position.lng()}
+    distanceCounter = polyline.getDistanceAtPoint(position)
   }
 
 }
