@@ -1,7 +1,7 @@
 function displayInfo(point){
     const div = document.getElementById("weatherWindow")
 
-  if (!point.dates || !point.tempList || !point.weatherList || !point.windList || !point.visList){
+  if (!point.dates || !point.tempList || !point.weatherList || !point.windList || !point.visList || !point.warning){
     return
   }
 
@@ -9,7 +9,20 @@ function displayInfo(point){
   table.innerHTML = "";
 
   var tr = document.createElement("tr")
-  th = document.createElement("th")
+  var td = document.createElement("td")
+  td.colSpan = point.dates.length
+  td.innerHTML = point.warning
+  tr.appendChild(td)
+  td = document.createElement("td")
+  button = document.createElement("button")
+  button.innerHTML = "X"
+  button.onclick = "const div = document.getElementById('weatherWindow'); div.style.display='none'"
+  td.appendChild(button)
+  tr.appendChild(td)
+  table.appendChild(tr)
+
+  tr = document.createElement("tr")
+  var th = document.createElement("th")
   th.innerHTML = "Time"
   tr.appendChild(th)
 
@@ -105,4 +118,5 @@ function displayInfo(point){
   table.appendChild(tr)
 
   div.style.display = "block"
+  addWindowListener()
 }
