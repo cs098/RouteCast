@@ -116,7 +116,7 @@ async function weatherFunction(point, time) {
     var visBad = false;
     for (let i = 0; i < visList.length; i++) {
       const vis = visList[i];
-      if (vis < 3) {
+      if (vis < 2) {
         if (iconName === "Gw") {
           iconName = "BsLv";
           warning = "Warning for extremely low visibility";
@@ -135,12 +135,12 @@ async function weatherFunction(point, time) {
     if (!visBad) {
       for (let i = 0; i < visList.length; i++) {
         const vis = visList[i];
-        if (vis <= 32 && vis > 10) {
+        if (vis >=2 && vis <4) {
           if (iconName === "Gw") {
             iconName = "Ns";
-            warning = "Warning for temperatures below freezing";
+            warning = "Warning for low visibility";
           } else {
-            warning += ", temperatures below freezing";
+            warning += ", low visibility";
           }
           break;
         }
@@ -154,7 +154,10 @@ async function weatherFunction(point, time) {
         dates.push(date);
       }
       point.dates = dates;
-      point.weatherList = weatherList;
+      point.weatherList = []
+      for(let i=0; i<weatherList.length; i++){
+        point.weatherList.push(meteoDict[weatherList[i]])
+      }
       point.tempList = tempList;
       point.windList = windList;
       point.visList = visList;
