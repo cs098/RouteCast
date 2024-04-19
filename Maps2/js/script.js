@@ -241,9 +241,11 @@ function updateETA(secLeft) {
   currTime = new Date(currTime); //converts to date format
   etaDate = new Date(eta); //converts to date format
   if (currTime.getDate() == etaDate.getDate()) { //if current time and eta are same day
-    displayETA = etaDate.getHours() + ":" + etaDate.getMinutes();
+    let hours = etaDate.getHours()
+    if(hours>12){hours-=12}
+    displayETA = hours + ":" + etaDate.getMinutes();
   } else { //if on separate days, include date
-    displayETA = etaDate.getMonth() + "/" + etaDate.getDate() + "  " + etaDate.getHours() + ":" + etaDate.getMinutes();
+    displayETA = etaDate.getMonth() + "/" + etaDate.getDate() + "  " + hours + ":" + etaDate.getMinutes();
   }
   /*console.log(eta.substring(0,eta.indexOf("GMT")));*/
   box = document.querySelector("#eta");
