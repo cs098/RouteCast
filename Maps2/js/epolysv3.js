@@ -169,6 +169,41 @@ google.maps.Polygon.prototype.GetPointAtDistance = function(metres) {
     return google.maps.geometry.spherical.interpolate(p1,p2,m)
 }
 
+google.maps.Polygon.prototype.getDistanceAtPoint = function(point) {
+  if (!point || !(point instanceof google.maps.LatLng)) return null;
+
+  var path = this.getPath();
+  if (path.getLength() < 2) return null;
+
+  var totalDistance = 0;
+
+  for (var i = 1; i < path.getLength(); i++) {
+    var segmentDistance = google.maps.geometry.spherical.computeDistanceBetween(
+      path.getAt(i),
+      path.getAt(i - 1)
+    );
+
+    var distanceToPoint = google.maps.geometry.spherical.computeDistanceBetween(
+      path.getAt(i),
+      point
+    );
+
+    // If the point is within this segment
+    if (distanceToPoint <= segmentDistance) {
+      // Calculate the distance up to the point within this segment
+      var fractionOfSegment = distanceToPoint / segmentDistance;
+      var distanceUpToSegment = totalDistance + (fractionOfSegment * segmentDistance);
+      return distanceUpToSegment;
+    }
+
+    // Otherwise, add the segment distance to the total distance
+    totalDistance += segmentDistance;
+  }
+
+  // If the point is beyond the end of the path, return null
+  return null;
+};
+
 // === A method which returns an array of GLatLngs of points a given interval along the path ===
 google.maps.Polygon.prototype.GetPointsAtDistance = function(metres) {
   var next = metres;
