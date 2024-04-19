@@ -16,7 +16,7 @@ function displayInfo(point){
   td = document.createElement("td")
   button = document.createElement("button")
   button.innerHTML = "X"
-  button.onclick = "const div = document.getElementById('weatherWindow'); div.style.display='none'"
+  button.onclick = closeWindow
   td.appendChild(button)
   tr.appendChild(td)
   table.appendChild(tr)
@@ -119,4 +119,9 @@ function displayInfo(point){
 
   div.style.display = "block"
   addWindowListener()
+}
+
+function closeWindow(){
+    const div = document.getElementById('weatherWindow'); 
+    div.style.display='none'
 }
