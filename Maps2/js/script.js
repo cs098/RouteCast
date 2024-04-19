@@ -2,6 +2,7 @@ var polyline;
 var points;
 var markers;
 var map;
+var eta;
 
 async function initMap() {
 
@@ -94,11 +95,8 @@ async function initMap() {
             }
 
             //computes ETA
-            var eta = computeETA(response);
-            //converts promise to value - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
-            eta.then((value) => {
-              updateETA(value);
-            });
+            eta = computeETA(response);
+            updateETA(eta);
         });
   }
   
@@ -202,6 +200,8 @@ async function initMap() {
   function updatePoints(response){
     currentLoc = getCurrentLoc()
     time = findTimeAlongPolyline(response, currentLoc)
+    eta -= time
+    updateETA(eta)
     for(var i=points.length-1; i>=0; i--){
       let point = points[i]
       point.timeTo -= time
