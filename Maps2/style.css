@@ -297,3 +297,7 @@ body {
   td, th{
       padding: 10px;
   }
+#car{
+    width: 15px;
+    aspect-ratio: auto;
+  }
