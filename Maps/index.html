@@ -7,44 +7,53 @@
   <title>replit</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
   <script src="js/epolysv3.js"></script>
-  <script src="js/displayRoute.js"></script>
   <script src="js/findTime.js"></script>
   <script src="js/script.js"></script>
+  <script src="js/displayRoute.js"></script>
   <script src="js/input.js"></script>
   <script src="js/weather.js"></script>
+
 
 </head>
 
 <body>
 
   <div class="container">
-          <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuEhEGg1Cx3AEgtYJwLVeTs2ZWWTQa8VE&loading=async&libraries=places&callback=initMap">
-      </script>
-
-    <script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuEhEGg1Cx3AEgtYJwLVeTs2ZWWTQa8VE&loading=async&libraries=places&callback=initMap">
-      </script>
     <div id="map">
-    <div id="sidebar">
-      <a href="javascript:void(0)" class="closebtn" onclick="">&times;</a>
-    </div>
+      <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuEhEGg1Cx3AEgtYJwLVeTs2ZWWTQa8VE&loading=async&libraries=places&callback=initMap">
+      </script>
 
     </div>
 
+    <script>
+      function closeNav() {
+        document.getElementById("sidebar").style.width = "0";
+        document.getElementById("container").style.marginLeft= "0";
+      }
+    </script>
+
+
+    <div id="container">
+      <div id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+      </div>
+    </div>
+    
     <div class="location-card">
       <h2 class="card-title">Enter Route Details</h2>
         
         <div id="inputs">
           <div class="location-input">
             <label class="pointLabel">Point 1:</label>
-            <input class="search_bar point" type="text" placeholder="Enter Location">
+            <input id = "Start" class="search_bar point" type="text" placeholder="Enter Location">
             <img class="delete" onclick="removeSearchBar(this)" src="icons8-delete-30.png"/>
           </div>
           
           <div class="location-input">
             <label class="pointLabel">Point 2:</label>
-            <input class="search_bar point" type="text" placeholder="Enter Location">
+            <input id = "Final" class="search_bar point" type="text" placeholder="Enter Location">
             <img class="delete" onclick="removeSearchBar(this)" src="icons8-delete-30.png"/>
           </div>
         </div>
