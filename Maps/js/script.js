@@ -245,7 +245,7 @@ function updateETA(secLeft) {
   if (currTime.getDate() == etaDate.getDate()) { //if current time and eta are same day
     displayETA = hours + ":" + etaDate.getMinutes();
   } else { //if on separate days, include date
-    displayETA = hours + ":" + etaDate.getMinutes() + etaDate.getMonth() + "/" + etaDate.getDate();
+    displayETA = hours + ":" + etaDate.getMinutes() + " " + etaDate.getMonth() + "/" + etaDate.getDate();
   }
   /*console.log(eta.substring(0,eta.indexOf("GMT")));*/
   box = document.querySelector("#eta");
