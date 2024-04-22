@@ -18,7 +18,7 @@ body {
   
   
   #map {
-    height:82.5vh;
+    height:85%;
     width: 100%;
   }
   
@@ -205,7 +205,8 @@ body {
     width:100%;
     padding: 4vh;
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
+    height:9%;
   }
 
 .info_bar {
