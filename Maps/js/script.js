@@ -240,12 +240,12 @@ function updateETA(secLeft) {
   eta = currTime + secLeft*1000; //seconds since epoch at eta (converts from milliseconds -> seconds)
   currTime = new Date(currTime); //converts to date format
   etaDate = new Date(eta); //converts to date format
+  let hours = etaDate.getHours();
+  if(hours>12){hours-=12};
   if (currTime.getDate() == etaDate.getDate()) { //if current time and eta are same day
-    let hours = etaDate.getHours()
-    if(hours>12){hours-=12}
     displayETA = hours + ":" + etaDate.getMinutes();
   } else { //if on separate days, include date
-    displayETA = etaDate.getMonth() + "/" + etaDate.getDate() + "  " + hours + ":" + etaDate.getMinutes();
+    displayETA = hours + ":" + etaDate.getMinutes() + etaDate.getMonth() + "/" + etaDate.getDate();
   }
   /*console.log(eta.substring(0,eta.indexOf("GMT")));*/
   box = document.querySelector("#eta");
