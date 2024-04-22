@@ -242,10 +242,12 @@ function updateETA(secLeft) {
   etaDate = new Date(eta); //converts to date format
   let hours = etaDate.getHours();
   if(hours>12){hours-=12};
+  let minutes = etaDate.getMinutes();
+  if (minutes < 10) {minutes = "0"+minutes};
   if (currTime.getDate() == etaDate.getDate()) { //if current time and eta are same day
-    displayETA = hours + ":" + etaDate.getMinutes();
+    displayETA = hours + ":" + minutes;
   } else { //if on separate days, include date
-    displayETA = hours + ":" + etaDate.getMinutes() + " " + etaDate.getMonth() + "/" + etaDate.getDate();
+    displayETA = hours + ":" + minutes + " " + etaDate.getMonth() + "/" + etaDate.getDate();
   }
   /*console.log(eta.substring(0,eta.indexOf("GMT")));*/
   box = document.querySelector("#eta");
